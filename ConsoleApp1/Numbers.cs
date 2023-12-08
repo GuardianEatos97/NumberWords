@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace WordNumbers
 {
@@ -35,14 +36,58 @@ namespace WordNumbers
 
             else if (num >= 100 & num <= 999) 
             {
-                if (num % 10 == 0)
+                if ( num%100 >=10 & num%100 <=19)
                 {
-                    
+                    return singledigits[num / 100] + " Hundred" + " " + smalldualdigits[num%10];
                 }
-                return singledigits[num/100] + " hundred" + " " + tensstring[num%100/10] + " " + tensstring[num%10];
+                else if (num%10 >= 1 & num%10 <10) 
+                {
+                    return singledigits[num / 100] + " Hundred" + " " + tensstring[num % 100 / 10] + " " + singledigits[num % 10];
+                }
+                 
+
+                return singledigits[num/100] + " Hundred" + " " + tensstring[num%100/10] + " " + tensstring[num%10];
 
                 
             }
+            else if (num >= 1000 &  num <= 9999)
+            {
+                if (num % 1000 >= 100 & num % 1000 <= 999)
+                {
+                    if (num % 1000 == 0)
+                    return singledigits[num / 1000] + " Thousand";
+                    else if (num % 1000 > 0 & num % 1000 < 1000)
+                    {
+                        if (num % 10 <= 0 & num % 10 < 10)
+                        {
+                            return singledigits[num / 1000] + " Thousand" + " " + singledigits[(num % 1000 / 100)] + " Hundred" + " " + singledigits[num % 10];
+                        }
+                        else if (num % 100 >= 10 & num % 100 < 20)
+                        {
+                            return singledigits[num / 1000] + " Thousand" + " " + singledigits[(num % 1000 / 100)] + " Hundred" + " " + smalldualdigits[num % 10];
+
+                        }
+                        else if (num % 100 >= 20 & num % 100 < 100)
+                        {
+                            return singledigits[num / 1000] + " Thousand " + singledigits[num % 1000 / 100] + " Hundred " + tensstring[num % 100 / 10] + " " + singledigits[num % 10];
+                        }
+                    }
+
+                }
+
+                else if (num % 1000 >= 10 & num % 1000 <= 19)
+                {
+                    return singledigits[num / 1000] + " Thousand" + " " + smalldualdigits[num % 10];
+
+                }
+                else if (num % 10 >= 0 & num % 10 <= 9)
+                {
+                    return singledigits[num / 1000] + " Thousand" + " " + tensstring[num % 100/10] + " " + singledigits[num%10];
+                }
+                    return singledigits[num / 1000] + " Thousand" + " " + singledigits[(num / 1000)] + " Hundred";
+
+            }
+
 
             return "";
         }
